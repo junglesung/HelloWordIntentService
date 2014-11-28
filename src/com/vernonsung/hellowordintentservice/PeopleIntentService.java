@@ -305,6 +305,10 @@ public class PeopleIntentService extends IntentService {
         	peopleList.put(_uuid, togetherTime);
         }
     }
+    
+    private void cleanForgetful() {
+    	//
+    }
 
     public long getUuid() {
     	return uuid;
