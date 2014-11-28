@@ -1,6 +1,7 @@
 package com.vernonsung.hellowordintentservice;
 
 import android.app.IntentService;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.Context;
 import android.content.IntentFilter;
@@ -15,9 +16,13 @@ import android.util.Log;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
+
+import com.vernonsung.hellowordintentservice.FriendDB.FriendPeople;
 
 public class PeopleIntentService extends IntentService {
     private WifiP2pManager mManager;
@@ -25,8 +30,7 @@ public class PeopleIntentService extends IntentService {
     private IntentFilter mIntentFilter;
     private P2pNsdHelper mP2pNsdHelper;
     private WifiP2pReceiver mReceiver;
-    private int wpsSetupType = WpsInfo.PBC;
-    private HashMap<Long, Calendar> peopleList = new HashMap<Long, Calendar>();
+    private Hashtable<Long, Calendar> peopleList = new Hashtable<Long, Calendar>();
 	private boolean toExit = true;
 	private long uuid;
 //	private UUID uuid = UUID.randomUUID();
@@ -314,7 +318,16 @@ public class PeopleIntentService extends IntentService {
     	return uuid;
     }
     
-    public long insertRandom() {
+    public Hashtable<Long, Calendar> getPeopleList() {
+		return peopleList;
+	}
+
+	public long insertRandom() {
+		int i = 0;
+		peopleList.clear();
+    	for (i = 0; i < 10; i++) {
+    		peopleList.put((long)new Random().nextInt(20), Calendar.getInstance());
+    	}
     	return mFriendDB.executeSample();
     }
 }

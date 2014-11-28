@@ -9,41 +9,34 @@
     tools:context="com.vernonsung.hellowordintentservice.MainActivity" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textViewUuid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/hello_world" />
 
     <Button
-        android:id="@+id/buttonStartService"
+        android:id="@+id/buttonRealTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
-        android:text="@string/start_service" />
+        android:layout_alignLeft="@+id/textViewUuid"
+        android:layout_below="@+id/textViewUuid"
+        android:text="@string/real_time" />
 
     <Button
-        android:id="@+id/buttonKillService"
+        android:id="@+id/buttonHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/buttonStartService"
-        android:layout_below="@+id/buttonStartService"
-        android:text="@string/kill_service" />
+        android:layout_alignBaseline="@+id/buttonRealTime"
+        android:layout_alignBottom="@+id/buttonRealTime"
+        android:layout_toRightOf="@+id/buttonRealTime"
+        android:text="@string/history" />
 
-    <Button
-        android:id="@+id/buttonGetUuid"
-        android:layout_width="wrap_content"
+    <ListView
+        android:id="@+id/listViewFriend"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/buttonKillService"
-        android:layout_below="@+id/buttonKillService"
-        android:text="@string/get_uuid" />
-
-    <Button
-        android:id="@+id/buttonInsertRamdom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/buttonGetUuid"
-        android:layout_below="@+id/buttonGetUuid"
-        android:text="@string/insert_random" />
+        android:layout_alignLeft="@+id/buttonRealTime"
+        android:layout_below="@+id/buttonRealTime" >
+    </ListView>
 
 </RelativeLayout>

@@ -8,7 +8,9 @@
     <string name="start_service">Start service</string>
     <string name="starting_service">Starting service</string>
     <string name="get_uuid">Get UUID</string>
-    <string name="insert_random">Insert Ramdom</string>
+    <string name="insert_random">Insert ramdom</string>
+    <string name="real_time">Real time</string>
+    <string name="history">History</string>
     
     <string name="debug">Debug</string>
     <string name="wifi_p2p_ok">WiFi P2P is OK</string>
@@ -40,5 +42,6 @@
     <string name="i_am_not_group_owner">I\'m not group owner</string>
     <string name="this_is_a_bug">This is a bug</string>
 
+    <string name="service_is_not_ready">Service is not ready</string>
 
 </resources>
