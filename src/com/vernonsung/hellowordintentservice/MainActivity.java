@@ -9,11 +9,15 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.vernonsung.hellowordintentservice.FriendDB.FriendPeople;
+
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.Menu;
@@ -22,6 +26,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,7 +75,7 @@ public class MainActivity extends Activity {
         });
         buttonHistory.setOnClickListener(new Button.OnClickListener() {
         	public void onClick(View v) {
-//        		insertRandom();
+        		updateHistory();
         	}
         });
         
@@ -175,11 +180,35 @@ public class MainActivity extends Activity {
 		listViewFriend.setAdapter(adapter);
     }
     
-    private void insertRandom() {
-    	long id = mService.insertRandom();
-    	Toast.makeText(this, "Row " + String.valueOf(id), Toast.LENGTH_SHORT).show();
+    private void updateHistory() {
+    	// Debug
+    	insertRandomDb();
+
+		Cursor c = mService.getFriends();
+		if (c == null) {
+			Toast.makeText(this, R.string.read_database_failed, Toast.LENGTH_SHORT).show();
+			return;
+		}
+		SimpleCursorAdapter adapter = new SimpleCursorAdapter(
+				this, android.R.layout.simple_list_item_2, c, 
+				new String[] {FriendPeople.COLUMN_NAME_UUID, FriendPeople.COLUMN_NAME_TIME}, 
+				new int [] {android.R.id.text1, android.R.id.text2}, 0);
+		listViewFriend.setAdapter(adapter);
     }
     
+    // Debug
+    private void insertRandom() {
+    	int num = mService.insertRandom();
+    	Toast.makeText(this, String.valueOf(num) + " rows", Toast.LENGTH_SHORT).show();
+    }
+    
+    // Debug
+    private void insertRandomDb() {
+    	int num = mService.insertRandomDb();
+    	Toast.makeText(this, String.valueOf(num) + " rows", Toast.LENGTH_SHORT).show();
+    }
+    
+    // Debug
     private void killPeopleIntentService() {
     	if (mService != null)
     		mService.setToExit(true);

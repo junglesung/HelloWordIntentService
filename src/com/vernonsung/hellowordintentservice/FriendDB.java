@@ -38,7 +38,8 @@ public class FriendDB {
 		// Create database
     	mFriendListOpenHelper = new FriendListOpenHelper(context);
     }
-    
+
+    // Debug
     public long insertRandom() {
     	// Gets the data repository in write mode
     	SQLiteDatabase db = mFriendListOpenHelper.getWritableDatabase();
@@ -119,6 +120,36 @@ public class FriendDB {
 		return true;
     }
     
+    /**
+     * Get all friends information
+     * @return
+     * The cursor points to rows of friends information
+     */
+    public Cursor getFriends() {
+    	// Query existing record
+    	SQLiteDatabase db = mFriendListOpenHelper.getReadableDatabase();
+    	String[] projection = null;
+    	String selection = null;
+    	String[] selectionArgs = null;
+    	String sortOrder = FriendPeople.COLUMN_NAME_TIME + " DESC";
+
+    	Cursor c = db.query(
+    	    FriendPeople.TABLE_NAME,  // The table to query
+    	    projection,               // The columns to return
+    	    selection,                // The columns for the WHERE clause
+    	    selectionArgs,            // The values for the WHERE clause
+    	    null,                     // don't group the rows
+    	    null,                     // don't filter by row groups
+    	    sortOrder                 // The sort order
+    	);
+    	if (c.moveToFirst() == false) {
+    		return null;
+    	} else {
+    		return c;
+    	}
+    }
+    
+    // Debug
     public int executeSample() {
     	int i = 0;
     	
@@ -154,12 +185,11 @@ public class FriendDB {
     	    FriendPeople.COLUMN_NAME_UUID,
     	    FriendPeople.COLUMN_NAME_TIME
     	};
-
+    	String selection = FriendPeople.COLUMN_NAME_UUID + " > ?";
+    	String[] selectionArgs = {"0"};
+    	
     	// How you want the results sorted in the resulting Cursor
     	String sortOrder = FriendPeople.COLUMN_NAME_UUID + " ASC";
-
-    	String selection = FriendPeople.COLUMN_NAME_UUID + " > ?";
-    	String[] selectionArgs = {"2"};
 
     	Cursor c = db.query(
     	    FriendPeople.TABLE_NAME,  // The table to query
@@ -193,7 +223,7 @@ public class FriendDB {
     	String [] updateArgs = {"10"};
     	int updateRowNum = db.update(FriendPeople.TABLE_NAME, updateValues, updateClause, updateArgs);
     	
-    	return uuid;
+    	return c.getCount();
     }
     
     public class FriendListOpenHelper extends SQLiteOpenHelper {

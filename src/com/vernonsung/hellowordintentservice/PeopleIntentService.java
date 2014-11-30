@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.net.wifi.WpsInfo;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pManager;
@@ -311,7 +312,7 @@ public class PeopleIntentService extends IntentService {
     }
     
     private void cleanForgetful() {
-    	//
+    	// TODO: Clean people disappear for more than APART_MINUTE
     }
 
     public long getUuid() {
@@ -321,13 +322,21 @@ public class PeopleIntentService extends IntentService {
     public Hashtable<Long, Calendar> getPeopleList() {
 		return peopleList;
 	}
+    
+    public Cursor getFriends() {
+    	return mFriendDB.getFriends();
+    }
 
-	public long insertRandom() {
+	public int insertRandom() {
 		int i = 0;
 		peopleList.clear();
     	for (i = 0; i < 10; i++) {
     		peopleList.put((long)new Random().nextInt(20), Calendar.getInstance());
     	}
-    	return mFriendDB.executeSample();
+    	return peopleList.size();
     }
+
+	public int insertRandomDb() {
+		return mFriendDB.executeSample();
+	}
 }
