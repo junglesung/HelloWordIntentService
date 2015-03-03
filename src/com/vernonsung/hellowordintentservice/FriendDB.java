@@ -39,22 +39,6 @@ public class FriendDB {
     	mFriendListOpenHelper = new FriendListOpenHelper(context);
     }
 
-    // Debug
-    public long insertRandom() {
-    	// Gets the data repository in write mode
-    	SQLiteDatabase db = mFriendListOpenHelper.getWritableDatabase();
-
-    	// Create a new map of values, where column names are the keys
-    	ContentValues values = new ContentValues();
-    	values.put(FriendPeople.COLUMN_NAME_UUID, new Random().nextInt(100));
-    	values.put(FriendPeople.COLUMN_NAME_TIME, Calendar.getInstance().getTimeInMillis());
-
-    	// Insert the new row, returning the primary key value of the new row
-    	long newRowId = db.insert(FriendPeople.TABLE_NAME, null, values);
-    	
-    	return newRowId;
-    }
-
     /**
      * Update the together time of a friend
      * @param uuid
@@ -148,7 +132,23 @@ public class FriendDB {
     		return c;
     	}
     }
-    
+
+    // Debug
+    public long insertRandom() {
+    	// Gets the data repository in write mode
+    	SQLiteDatabase db = mFriendListOpenHelper.getWritableDatabase();
+
+    	// Create a new map of values, where column names are the keys
+    	ContentValues values = new ContentValues();
+    	values.put(FriendPeople.COLUMN_NAME_UUID, new Random().nextInt(100));
+    	values.put(FriendPeople.COLUMN_NAME_TIME, Calendar.getInstance().getTimeInMillis());
+
+    	// Insert the new row, returning the primary key value of the new row
+    	long newRowId = db.insert(FriendPeople.TABLE_NAME, null, values);
+    	
+    	return newRowId;
+    }
+
     // Debug
     public int executeSample() {
     	int i = 0;
